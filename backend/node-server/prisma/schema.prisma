@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model collection {
+  id           String         @default(dbgenerated("public.uuid_generate_v4()")) @db.Uuid
+  title        String         @db.VarChar(50)
+  description  String?
+  user_id      String         @db.Uuid
+  user         user           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  contain_post contain_post[]
+
+  @@id([id, user_id])
+}
+
+model comment {
+  id            String    @id @default(dbgenerated("public.uuid_generate_v4()")) @db.Uuid
+  user_id       String?   @db.Uuid
+  post_id       String?   @db.Uuid
+  content       String?
+  date_created  DateTime? @default(now()) @db.Timestamp(6)
+  rep_id        String?   @db.Uuid
+  post          post?     @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  comment       comment?  @relation("commentTocomment", fields: [rep_id], references: [id], onDelete: Cascade)
+  other_comment comment[] @relation("commentTocomment")
+  user          user?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model contain_post {
+  user_id       String     @db.Uuid
+  collection_id String     @db.Uuid
+  post_id       String     @db.Uuid
+  post          post       @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  collection    collection @relation(fields: [user_id, collection_id], references: [user_id, id], onDelete: Cascade)
+
+  @@id([user_id, collection_id, post_id])
+}
+
+model download {
+  user_id  String @db.Uuid
+  image_id String @db.Uuid
+  image    image  @relation(fields: [image_id], references: [id], onDelete: Cascade)
+  user     user   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, image_id])
+}
+
+model image {
+  id       String     @id @default(dbgenerated("public.uuid_generate_v4()")) @db.Uuid
+  style    String?    @db.VarChar(255)
+  price    Float?
+  post_id  String?    @db.Uuid
+  download download[]
+  post     post?      @relation(fields: [post_id], references: [id], onDelete: Cascade)
+}
+
+model interact {
+  user_id  String    @db.Uuid
+  post_id  String    @db.Uuid
+  note     String?
+  favorite Boolean
+  save     Boolean
+  react    String?   @db.VarChar(255)
+  post     post      @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  reaction reaction? @relation(fields: [react], references: [name], onDelete: Cascade)
+  user     user      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, post_id])
+}
+
+model post {
+  id           String         @id @default(dbgenerated("public.uuid_generate_v4()")) @db.Uuid
+  title        String         @db.VarChar(50)
+  description  String?
+  date_created DateTime?      @default(now()) @db.Timestamp(6)
+  user_id      String?        @db.Uuid
+  comment      comment[]
+  contain_post contain_post[]
+  image        image[]
+  interact     interact[]
+  user         user?          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  tag          tag[]
+}
+
+model reaction {
+  name     String     @id @db.VarChar(255)
+  url      String?
+  interact interact[]
+}
+
+model subscribe {
+  subscriber_id                      String @db.Uuid
+  subscribed_id                      String @db.Uuid
+  user_subscribe_subscribed_idTouser user   @relation("subscribe_subscribed_idTouser", fields: [subscribed_id], references: [id], onDelete: Cascade)
+  user_subscribe_subscriber_idTouser user   @relation("subscribe_subscriber_idTouser", fields: [subscriber_id], references: [id], onDelete: Cascade)
+
+  @@id([subscriber_id, subscribed_id])
+}
+
+model tag {
+  post_id String @db.Uuid
+  name    String @db.VarChar(255)
+  post    post   @relation(fields: [post_id], references: [id], onDelete: Cascade)
+
+  @@id([post_id, name])
+}
+
+model user {
+  id                                      String       @id @default(dbgenerated("public.uuid_generate_v4()")) @db.Uuid
+  username                                String       @db.VarChar(255)
+  password                                String       @db.VarChar(255)
+  email                                   String       @db.VarChar(255)
+  date_created                            DateTime?    @default(now()) @db.Timestamp(6)
+  total_sub                               Int?         @default(0)
+  refresh_token                           String?
+  collection                              collection[]
+  comment                                 comment[]
+  download                                download[]
+  interact                                interact[]
+  post                                    post[]
+  subscribe_subscribe_subscribed_idTouser subscribe[]  @relation("subscribe_subscribed_idTouser")
+  subscribe_subscribe_subscriber_idTouser subscribe[]  @relation("subscribe_subscriber_idTouser")
+}
