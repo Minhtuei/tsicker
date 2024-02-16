@@ -1,26 +1,45 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import { Dialog, DialogBody } from "@material-tailwind/react";
-import { AuthForm } from "./AuthForm";
+import { Dialog } from "@material-tailwind/react";
 import { useAuthFormStore } from "../../states/authFormState";
+import { AuthForm } from "./AuthForm";
+import { useEffect } from "react";
+
 export function AuthDialog({ type }) {
-    const { openLogin, openSignUp, setOpenLogin, setOpenSignUp } =
-        useAuthFormStore();
+    const {
+        openLogin,
+        openSignUp,
+        setOpenLogin,
+        setOpenSignUp,
+        setFromNavBar,
+        fromNavBar,
+    } = useAuthFormStore();
+
+    useEffect(() => {
+        if (fromNavBar && (openLogin || openSignUp)) {
+            setFromNavBar(true);
+        } else {
+            setFromNavBar(false);
+        }
+    }, [openLogin, openSignUp, fromNavBar, setFromNavBar]);
+    const handleDiaglog = () => {
+        if (type === "login") {
+            setOpenLogin(!openLogin);
+        } else {
+            setOpenSignUp(!openSignUp);
+        }
+    };
 
     return (
         <Dialog
-            className="px-2.5 pt-5 pb-6 rounded-xl m-0"
-            open={type === "login" ? openLogin : openSignUp}
-            handler={
-                type === "login"
-                    ? () => setOpenLogin(!openLogin)
-                    : () => setOpenSignUp(!openSignUp)
+            className="bg-transparent shadow-none"
+            open={
+                !fromNavBar ? false : type === "login" ? openLogin : openSignUp
             }
+            handler={() => handleDiaglog()}
             size="sm"
         >
-            <DialogBody className="p-0 w-full">
-                <AuthForm type={type} />
-            </DialogBody>
+            <AuthForm type={type} />
         </Dialog>
     );
 }

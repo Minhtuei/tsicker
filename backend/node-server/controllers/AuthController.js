@@ -110,14 +110,26 @@ const register = async (req, res) => {
                 password: hashedPassword,
             },
         });
-        return res.json({ success: true, data: newUser });
+        return res.json({ success: true, user: newUser });
     } catch (err) {
         return res.status(400).json({ success: false, error: err.message });
     }
 };
 const verify = async (req, res) => {
     const { id } = req.user;
-    res.json({ success: true, id });
+    try {
+        const user = await prisma.user.findFirst({
+            select: select_user_info,
+            where: { id },
+        });
+        if (!user) {
+            return res.status(400).json({ success: false, error: "No user" });
+        }
+        const { password, ...result_user } = user;
+        return res.json({ success: true, user: result_user });
+    } catch (err) {
+        return res.status(400).json({ success: false, error: err.message });
+    }
 };
 const refreshToken = async (req, res) => {
     const cookie = req.cookies;

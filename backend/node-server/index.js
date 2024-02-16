@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/auth", authRouter);
+app.use("/api/v1/auth", authRouter);
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });

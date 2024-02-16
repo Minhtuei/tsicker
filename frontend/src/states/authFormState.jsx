@@ -6,5 +6,7 @@ export const useAuthFormStore = create(
         openSignUp: false,
         setOpenLogin: (value) => set({ openLogin: value }),
         setOpenSignUp: (value) => set({ openSignUp: value }),
+        fromNavBar: false,
+        setFromNavBar: (value) => set({ fromNavBar: value }),
     }))
 );
