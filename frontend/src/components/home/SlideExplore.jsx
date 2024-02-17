@@ -2,14 +2,6 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { Carousel, Typography } from "@material-tailwind/react";
 // eslint-disable-next-line react/prop-types
 export function SlideExplore({ onButtonClick }) {
-    // const handleFadeOut = () => {
-    //     setFadeOut(true);
-    // };
-    // const handleTransitionEnd = () => {
-    //     // Reset fadeOut and move to the next slide
-    //     setFadeOut(false);
-    //     setActiveSlide((prev) => (prev === SLIDE_INFO.length ? 0 : prev + 1));
-    // };
     const SLIDE_INFO = [
         {
             title: "Get your next",

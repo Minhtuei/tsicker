@@ -52,7 +52,9 @@ export function AuthForm({ type }) {
         try {
             if (type === "login") {
                 const response = await authService.login(loginFormData);
-                console.log(response);
+                if (response.success) {
+                    window.location.reload();
+                }
             } else {
                 const response = await authService.register(loginFormData);
                 console.log(response);
