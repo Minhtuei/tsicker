@@ -84,7 +84,7 @@ export function HomePage() {
                     ))}
                 </div>
             ) : (
-                <div className="h-full mt-[80px] mx-auto">
+                <div className="w-full h-full mt-[80px] mx-auto">
                     <PostGridGallery />
                 </div>
             )}

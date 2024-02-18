@@ -47,7 +47,7 @@ export function SlideExplore({ onButtonClick }) {
         },
     ];
     return (
-        <div className="relative h-full w-full">
+        <div className="relative h-full w-full px-[80px]">
             <Carousel
                 transition={{ type: "fade", duration: 1 }}
                 loop={true}
@@ -98,38 +98,38 @@ export function SlideExplore({ onButtonClick }) {
                 {SLIDE_INFO.map((slide, index) => (
                     <div
                         key={index}
-                        className={`w-full h-full absolute top-0 left-0 overflow-hidden z-${
+                        className={`relative w-full h-full overflow-hidden z-${
                             (SLIDE_INFO.length - index) * 10
                         }`}
                     >
-                        {slide.images.map((image, index) => (
+                        {slide.images.map((image, imgIndex) => (
                             <div
-                                key={index}
+                                key={imgIndex}
                                 className={`w-[240px] h-[350px] absolute`}
-                                style={
-                                    index <=
-                                    Math.floor(slide.images.length / 2.0)
-                                        ? {
-                                              bottom: `${300 - index * 100}px`, // Adjust the vertical spacing between images
-                                              left: `${index * 280}px`, // Adjust the horizontal spacing between images
-                                          }
-                                        : {
-                                              left: `${index * 280}px`, // Adjust the horizontal spacing between images
-                                              bottom: `${
-                                                  (index -
-                                                      Math.floor(
-                                                          slide.images.length /
-                                                              2.0
-                                                      )) *
-                                                  100
-                                              }px`, // Adjust the vertical spacing between images
-                                          }
-                                }
+                                style={{
+                                    // Center the V formation
+                                    bottom: `${
+                                        Math.abs(
+                                            imgIndex -
+                                                Math.floor(
+                                                    slide.images.length / 2.0
+                                                )
+                                        ) * (imgIndex % 2 === 0 ? 100 : 80)
+                                    }px`, // Adjusted calculation
+                                    left: `50%`, // Center the images horizontally
+                                    transform: `translateX(-50%) translateX(${
+                                        (imgIndex -
+                                            Math.floor(
+                                                slide.images.length / 2.0
+                                            )) *
+                                        250
+                                    }px)`,
+                                }}
                             >
                                 <img
                                     className="rounded-3xl w-full h-full object-cover object-center shadow-xl shadow-blue-gray-900/50"
                                     src={image}
-                                    alt={`slide_${index}`}
+                                    alt={`slide_${imgIndex}`}
                                 />
                             </div>
                         ))}
