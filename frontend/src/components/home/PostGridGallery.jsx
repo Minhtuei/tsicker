@@ -36,10 +36,12 @@ export function PostGridGallery() {
             {chunkedPosts?.map((chunk, index) => (
                 <div
                     key={index}
-                    className={`grid grid-cols-1 w-[${100 / numColumns}%]`}
+                    className={`flex flex-col items-center w-[${
+                        100 / numColumns
+                    }%]`}
                 >
                     {chunk?.map((post, index) => (
-                        <div key={index} className="pb-4 px-2">
+                        <div key={index} className="pb-4 px-2 h-fit">
                             <PostReview post={post} />
                         </div>
                     ))}
