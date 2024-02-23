@@ -8,5 +8,7 @@ export const useUserStore = create(
         setUserInfo: (value) => {
             set({ userInfo: value });
         },
+        authLoading: true,
+        setAuthLoading: (value) => set({ authLoading: value }),
     }))
 );

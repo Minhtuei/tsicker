@@ -1,5 +1,5 @@
 import { PostReview } from "../PostReview";
-import { useEffect, useState, useMemo } from "react";
+import { useLayoutEffect, useState, useMemo } from "react";
 import { useScreenSize } from "../../hooks/useScreenSize";
 import { POST_INFO } from "../../constants/postInfo";
 
@@ -9,7 +9,7 @@ export function PostGridGallery() {
         Math.max(1, Math.min(6, screenSize + 1))
     );
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setNumColumns(Math.max(1, Math.min(6, screenSize + 1)));
     }, [screenSize]);
 
@@ -24,11 +24,7 @@ export function PostGridGallery() {
 
     return (
         <div
-            className={
-                "grid grid-cols-" +
-                numColumns +
-                " gap-0.5 h-full w-full px-[60px]"
-            }
+            className={"grid gap-0.5 h-full w-full px-[60px]"}
             style={{
                 gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
             }}

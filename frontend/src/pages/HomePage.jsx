@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { NavigationBar } from "../components/NavigationBar";
 import { CartoonExplore } from "../components/home/CartoonExplore";
 import { PostExplore } from "../components/home/PostExplore";
+import { PostGridGallery } from "../components/home/PostGridGallery";
 import { SignUpExplore } from "../components/home/SignUpExplore";
 import { SketchExplore } from "../components/home/SketchExplore";
 import { SlideExplore } from "../components/home/SlideExplore";
-import { authService } from "../services/authService";
 import { useUserStore } from "../states/userInfoState";
-import { PostGridGallery } from "../components/home/PostGridGallery";
 export function HomePage() {
     const COMPONENTS = [
         SlideExplore,
@@ -37,31 +36,7 @@ export function HomePage() {
             });
         }
     }, [targetRef]);
-    const { setUserInfo, setIsAuthenticated, isAuthenticated } = useUserStore();
-    const [delayedRendering, setDelayedRendering] = useState(false);
-
-    useEffect(() => {
-        const fetchDataAndDelay = async () => {
-            try {
-                const response = await authService.verify();
-                if (response.success) {
-                    setUserInfo(response.user);
-                    setIsAuthenticated(true);
-                    // Introduce a delay after fetching
-                }
-                setTimeout(() => {
-                    setDelayedRendering(true);
-                }, 500); // Adjust the delay time as needed
-            } catch (error) {
-                // Handle error
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        fetchDataAndDelay();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    if (!delayedRendering) return null;
+    const { isAuthenticated } = useUserStore();
     return (
         <div className="relative w-screen h-screen overflow-x-hidden">
             <NavigationBar />
