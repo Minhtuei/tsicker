@@ -4,7 +4,19 @@ export const useUserStore = create(
     devtools((set) => ({
         isAuthenticated: false,
         setIsAuthenticated: (value) => set({ isAuthenticated: value }),
-        userInfo: null,
+        userInfo: {
+            // username: "",
+            // email: "",
+            // avatar: "",
+            // collection: {
+            //     posts: [],
+            //     title: "",
+            //     description: "",
+            // },
+            // posts: [],
+            // subscriber: [],
+            // createdAt: "",
+        },
         setUserInfo: (value) => {
             set({ userInfo: value });
         },
