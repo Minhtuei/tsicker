@@ -1,13 +1,12 @@
-import mn_Hayao from "../assets/mn_Hayao.jpg";
-import mn_Hosoda from "../assets/mn_Hosoda.jpg";
-import mn_Paprika from "../assets/mn_Paprika.jpg";
-import mn_Shinkai from "../assets/mn_Shinkai.jpg";
-import mn_oilPaint from "../assets/mn_oilPaint.jpg";
 const CARTOONIFY_SLIDE_INFO = [
-    { name: "Oil Paint", url: mn_oilPaint },
-    { name: "Hosoda", url: mn_Hosoda },
-    { name: "Paprika", url: mn_Paprika },
-    { name: "Hayao", url: mn_Hayao },
-    { name: "Shinkai", url: mn_Shinkai },
+    { name: "Oil Paint", url: "/cartoon/mn_oilPaint.jpg" },
+    { name: "Hosoda", url: "/cartoon/mn_Hosoda.jpg" },
+    { name: "Paprika 1", url: "/cartoon/mn_Paprika_1.jpg" },
+    { name: "Paprika 2", url: "/cartoon/mn_Paprika_2.jpg" },
+    { name: "Shinkai 1", url: "/cartoon/mn_Shinkai_1.jpg" },
+    { name: "Shinkai 2", url: "/cartoon/mn_Shinkai_2.jpg" },
+    { name: "Hayao 1", url: "/cartoon/mn_Hayao_1.jpg" },
+    { name: "Hayao 2", url: "/cartoon/mn_Hayao_2.jpg" },
+    { name: "Hayao 3", url: "/cartoon/mn_Hayao_3.jpg" },
 ];
 export default CARTOONIFY_SLIDE_INFO;

@@ -15,29 +15,29 @@ export function ImagePost() {
     return (
         <>
             {imageInfo.url ? (
-                <div className="min-w-[375px] rounded-3xl relative">
+                <div className="max-w-[375px] rounded-3xl relative">
                     <img
                         src={imageInfo.url}
                         alt="post"
-                        className="object-cover w-full h-full rounded-3xl"
+                        className="object-cover w-full h-full max-h-[700px] rounded-3xl"
                     />
                     <HiOutlineXMark
-                        className="absolute top-2 right-3 size-8 bg-white rounded-full cursor-pointer hover:bg-gray-200 transition-all duration-300"
+                        className="absolute transition-all duration-300 bg-white rounded-full cursor-pointer top-2 right-3 size-8 hover:bg-gray-200"
                         onClick={() => clearImage()}
                     />
                 </div>
             ) : (
                 <div
-                    className="bg-gray-300 min-w-[375px] h-full rounded-3xl relative flex flex-col-reverse text-center items-start cursor-pointer"
+                    className="bg-gray-300 max-w-[375px] h-full rounded-3xl relative flex flex-col-reverse text-center items-start cursor-pointer"
                     onClick={() => handleUploadImage()}
                 >
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                    <div className="absolute flex flex-col items-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                         <MdOutlineFileUpload className="size-20" />
-                        <Typography className="font-semibold text-lg">
+                        <Typography className="text-lg font-semibold">
                             Upload Image
                         </Typography>
                     </div>
-                    <Typography className="text-md font-medium mb-4">
+                    <Typography className="mb-4 font-medium text-md">
                         We recommend using high-quality .jpg or .png images less
                         than 20MB
                     </Typography>

@@ -19,3 +19,14 @@
     cursor: -webkit-zoom-in;
     cursor: zoom-in;
 }
+@layer utilities {
+    .button {
+        @apply shadow-none hover:!shadow-none rounded-full transition-all duration-300 ease-in-out;
+    }
+    .button--primary {
+        @apply px-3 py-3 bg-[#E60023] hover:bg-red-800 hover:text-gray-200 text-white text-lg capitalize;
+    }
+    .button--secondary {
+        @apply px-3 py-3 bg-gray-300 hover:bg-gray-400 text-[#111111] text-lg capitalize;
+    }
+}

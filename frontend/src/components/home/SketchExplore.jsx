@@ -1,36 +1,32 @@
-import sketch_info_1 from "../../assets/sketch_info_1.jpg";
-import sketch_info_2 from "../../assets/sketch_info_2.jpg";
-import sketch_info_3 from "../../assets/sketch_info_3.jpg";
-import sketch_info_4 from "../../assets/sketch_info_4.jpg";
-
+import SKETCH_SLIDE_INFO from "../../constants/sketch";
 import { Typography, Button } from "@material-tailwind/react";
 
 export function SketchExplore() {
     return (
         <>
             <div className="flex items-center justify-around w-full h-full bg-gray-100">
-                <div className="w-1/2 flex items-center justify-center ">
+                <div className="flex items-center justify-center w-1/2 ">
                     <div className="relative cursor-pointer">
                         <img
                             className="w-[300px] h-[455px] rounded-3xl object-cover object-center shadow-xl shadow-blue-gray-900/50 relative border-4 border-black z-30"
-                            src={sketch_info_1}
+                            src={SKETCH_SLIDE_INFO[0].url}
                         />
                         <img
-                            className="w-[200px] h-[250px] rounded-3xl object-cover object-center shadow-xl shadow-blue-gray-900/50 absolute top-5 -left-20 border-4	border-black z-40"
-                            src={sketch_info_2}
+                            className="w-[200px] h-[250px] rounded-3xl object-cover object-center shadow-xl shadow-blue-gray-900/50 absolute top-5 -left-20 border-4 border-black z-40"
+                            src={SKETCH_SLIDE_INFO[1].url}
                         />
                         <img
                             className="w-[200px] h-[250px] rounded-3xl object-cover object-center shadow-xl shadow-blue-gray-900/50 absolute top-2 -right-[120px] z-20 border-4 border-black"
-                            src={sketch_info_3}
+                            src={SKETCH_SLIDE_INFO[2].url}
                         />
                         <img
                             className="w-[200px] h-[250px] rounded-3xl object-cover object-center shadow-xl shadow-blue-gray-900/50 absolute -bottom-[100px] -right-[100px] z-40 border-4 border-black"
-                            src={sketch_info_4}
+                            src={SKETCH_SLIDE_INFO[3].url}
                         />
                     </div>
                 </div>
-                <div className="flex justify-center items-center w-1/2 h-full">
-                    <div className="flex flex-col items-center justify-center  gap-4 text-center h-1/2">
+                <div className="flex items-center justify-center w-1/2 h-full">
+                    <div className="flex flex-col items-center justify-center gap-4 text-center h-1/2">
                         <Typography
                             variant="h1"
                             className="text-[60px] font-bold text-gray-700"
@@ -49,11 +45,7 @@ export function SketchExplore() {
                             canvas. Try it now and bring your creativity to
                             life!
                         </Typography>
-                        <Button
-                            className={
-                                "px-3 py-2 shadow-none rounded-full hover:shadow-none text-lg capitalize transition-all duration-300 bg-[#E60023] hover:bg-red-800  hover:text-gray-200 text-white"
-                            }
-                        >
+                        <Button className="button button--primary !py-2">
                             Explore
                         </Button>
                     </div>

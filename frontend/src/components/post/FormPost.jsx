@@ -10,7 +10,7 @@ export function FormPost() {
     return (
         <>
             <div className="flex flex-col">
-                <Typography className="font-semibold text-lg" size="xl">
+                <Typography className="text-lg font-semibold" size="xl">
                     Your Title
                 </Typography>
                 <Input
@@ -27,7 +27,7 @@ export function FormPost() {
             </div>
 
             <div className="flex flex-col mb-8">
-                <Typography className="font-semibold text-lg" size="xl">
+                <Typography className="text-lg font-semibold" size="xl">
                     Your Description
                 </Typography>
                 <Textarea
@@ -43,7 +43,7 @@ export function FormPost() {
                 />
             </div>
             <div className="flex flex-col">
-                <Typography className="font-semibold text-lg" size="xl">
+                <Typography className="text-lg font-semibold" size="xl">
                     Your Link (Optional)
                 </Typography>
                 <Input
@@ -59,7 +59,7 @@ export function FormPost() {
                 />
             </div>
             <div className="flex flex-col">
-                <Typography className="font-semibold text-lg" size="xl">
+                <Typography className="text-lg font-semibold" size="xl">
                     Your Tags (Optional)
                 </Typography>
                 <Input
@@ -75,7 +75,7 @@ export function FormPost() {
                 />
             </div>
             <div className="flex flex-col">
-                <Typography className="font-semibold text-lg" size="xl">
+                <Typography className="text-lg font-semibold" size="xl">
                     Your Collection
                 </Typography>
                 <Select
@@ -99,7 +99,6 @@ export function FormPost() {
             <div className="flex flex-col gap-y-2">
                 <Switch
                     type="switch"
-                    color="black"
                     label="Allow People to Comment"
                     defaultChecked={true}
                     labelProps={{
@@ -108,7 +107,6 @@ export function FormPost() {
                 />
                 <Switch
                     type="switch"
-                    color="black"
                     label="Commercial Use"
                     defaultChecked={false}
                     labelProps={{

@@ -1,8 +1,28 @@
-import { Typography } from "@material-tailwind/react";
+import { Typography, Slider, Button } from "@material-tailwind/react";
 import { LuChevronsLeft, LuChevronsRight } from "react-icons/lu";
 import CARTOONIFY_SLIDE_INFO from "../../constants/cartoon";
+import SKETCH_SLIDE_INFO from "../../constants/sketch";
+import { useState } from "react";
+import { useImageUploadStore } from "../../states/imageUploadInfo";
 // eslint-disable-next-line react/prop-types
 export function SidePost({ isOpen, setOpen }) {
+    const [blurValue, setBlurValue] = useState(50);
+    const [sharpnessValue, setSharpnessValue] = useState(50);
+    const [openSketch, setOpenSketch] = useState(false);
+    const [disable, setDisable] = useState(false);
+    const { imageInfo, setImageInfo } = useImageUploadStore();
+    const handleChooseEffect = (name) => {
+        setDisable(true);
+        if (imageInfo.url) {
+            setImageInfo({ ...imageInfo, theme: name });
+            console.log(imageInfo);
+        } else {
+            console.log("Please upload an image");
+        }
+        setTimeout(() => {
+            setDisable(false);
+        }, 1000);
+    };
     return (
         <div
             className={`h-full flex flex-col ${
@@ -12,8 +32,8 @@ export function SidePost({ isOpen, setOpen }) {
             <div className="h-[80px] px-4 flex items-center justify-between border-t border-b border-t-gray-300 border-b-gray-300 shrink-0">
                 {isOpen ? (
                     <>
-                        <Typography className="font-semibold text-lg" size="xl">
-                            Custom Theme
+                        <Typography className="text-lg font-semibold" size="xl">
+                            Custom Effect
                         </Typography>
                         <LuChevronsLeft
                             className="text-[#11111] size-10 hover:bg-gray-300 cursor-pointer rounded-full transition-all duration-300"
@@ -28,20 +48,85 @@ export function SidePost({ isOpen, setOpen }) {
                 )}
             </div>
             {isOpen && (
-                <div className="h-full flex flex-col flex-1 mt-4 gap-y-2">
+                <div className="flex flex-col flex-1 h-full mt-4 overflow-y-auto select-none gap-y-2 scrollbar-hide">
+                    <div
+                        onClick={() => setOpenSketch((prev) => !prev)}
+                        className={
+                            "h-[80px] w-full flex items-center gap-x-4 px-4 hover:bg-gray-100 cursor-pointer transition-all duration-200 " +
+                            (disable ? "pointer-events-none" : "")
+                        }
+                    >
+                        <div className="bg-gray-300 rounded-lg size-20 shrink-0">
+                            {" "}
+                            <img
+                                className="object-cover w-full h-full rounded-lg"
+                                src={SKETCH_SLIDE_INFO[1].url}
+                            />
+                        </div>
+                        <Typography
+                            className="flex-1 text-lg font-semibold "
+                            size="xl"
+                        >
+                            Sketch
+                        </Typography>
+                    </div>
+                    {openSketch && (
+                        <div className="flex flex-col w-full p-2 px-4 gap-y-2 ">
+                            <Typography
+                                className="text-lg font-semibold "
+                                size="xl"
+                            >
+                                Blur : {blurValue}
+                            </Typography>
+                            <Slider
+                                min={0}
+                                max={100}
+                                step={1}
+                                value={blurValue}
+                                onChange={(e) => setBlurValue(e.target.value)}
+                                className="w-full"
+                            />
+                            <Typography
+                                className="text-lg font-semibold "
+                                size="xl"
+                            >
+                                Sharpness : {sharpnessValue}
+                            </Typography>
+                            <Slider
+                                min={0}
+                                max={100}
+                                step={1}
+                                value={sharpnessValue}
+                                onChange={(e) =>
+                                    setSharpnessValue(e.target.value)
+                                }
+                                className="w-full"
+                            />
+                            <div className="flex flex-row-reverse">
+                                <Button className="button button--secondary !bg-black !text-white hover:!opacity-80 !py-2">
+                                    Apply
+                                </Button>
+                            </div>
+                        </div>
+                    )}
                     {CARTOONIFY_SLIDE_INFO.map((slide, index) => (
                         <div
                             key={index}
-                            className="h-[80px] w-full flex items-center gap-x-4 px-4 hover:bg-gray-100 cursor-pointer transition-all duration-200"
+                            onClick={() => handleChooseEffect(slide.name)}
+                            className={
+                                "h-[80px] w-full flex items-center gap-x-4 px-4 hover:bg-gray-100 cursor-pointer transition-all duration-200 " +
+                                (disable ? "pointer-events-none" : "")
+                            }
+                            disabled={disable}
                         >
                             <div
-                                className="size-20 bg-gray-300 rounded-lg bg-cover bg-center shrink-0"
+                                className="bg-gray-300 bg-center bg-cover rounded-lg size-20 shrink-0"
                                 style={{
                                     backgroundImage: `url(${slide.url})`,
                                 }}
                             ></div>
                             <Typography
-                                className="font-semibold text-lg flex-1 "
+                                className="flex-1 text-lg font-semibold "
                                 size="xl"
                             >
                                 {slide.name}

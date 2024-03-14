@@ -65,7 +65,7 @@ export function AuthForm({ type }) {
     };
     return (
         <Card className="mx-auto w-[80%] max-w-[80%] rounded-3xl">
-            <CardBody className="flex flex-col gap-4 justify-center items-center">
+            <CardBody className="flex flex-col items-center justify-center gap-4">
                 <img
                     className="mb-2"
                     src={logo}
@@ -78,10 +78,10 @@ export function AuthForm({ type }) {
                 </Typography>
 
                 <form
-                    className="mt-6 mb-2 w-80 max-w-screen-lg sm:w-96"
+                    className="max-w-screen-lg mt-6 mb-2 w-80 sm:w-96"
                     onSubmit={handleSubmit(submit)}
                 >
-                    <div className="mb-1 flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 mb-1">
                         <Typography
                             variant="h6"
                             color="blue-gray"
@@ -180,7 +180,7 @@ export function AuthForm({ type }) {
                             <>
                                 <div className="-mt-2 text-right">
                                     <Link
-                                        className="hover:underline hover:underline-offset-1 text-gray-900 font-medium"
+                                        className="font-medium text-gray-900 hover:underline hover:underline-offset-1"
                                         to="/password/reset"
                                     >
                                         Forgot Password?
@@ -224,7 +224,7 @@ export function AuthForm({ type }) {
                         )}
                     </div>
                     <Button
-                        className="mt-6 bg-[#E60023] rounded-full hover:shadow-none px-2 text-xs"
+                        className="button button--primary mt-6 !px-2 !text-xs"
                         fullWidth
                         type="submit"
                     >
@@ -232,7 +232,7 @@ export function AuthForm({ type }) {
                     </Button>
                     <Typography
                         color="gray"
-                        className="mt-2 text-center font-bold"
+                        className="mt-2 font-bold text-center"
                     >
                         OR
                     </Typography>
@@ -257,7 +257,7 @@ export function AuthForm({ type }) {
                     </Button>
                     <Typography
                         color="gray"
-                        className="mt-4 text-center text-sm font-normal"
+                        className="mt-4 text-sm font-normal text-center"
                     >
                         By continuing, you agree to Tsicker's Terms of Service
                         and acknowledge you've read our Privacy Policy. Notice
@@ -265,7 +265,7 @@ export function AuthForm({ type }) {
                     </Typography>
                     <Typography
                         color="gray"
-                        className="mt-4 text-center font-bold text-gray-900 cursor-pointer text-sm hover:underline hover:underline-offset-1"
+                        className="mt-4 text-sm font-bold text-center text-gray-900 cursor-pointer hover:underline hover:underline-offset-1"
                         onClick={
                             type === "login"
                                 ? () => {

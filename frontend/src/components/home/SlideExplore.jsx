@@ -1,51 +1,8 @@
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { Carousel, Typography } from "@material-tailwind/react";
+import SLIDE_INFO from "../../constants/slideInfo";
 // eslint-disable-next-line react/prop-types
 export function SlideExplore({ onButtonClick }) {
-    const SLIDE_INFO = [
-        {
-            title: "Get your next",
-            subtitle: "New look outfit",
-            images: [
-                "/slides/slide_1_1.jpg",
-                "/slides/slide_1_2.jpg",
-                "/slides/slide_1_3.jpg",
-                "/slides/slide_1_4.jpg",
-                "/slides/slide_1_5.jpg",
-                "/slides/slide_1_6.jpg",
-                "/slides/slide_1_7.jpg",
-            ],
-            color: "red-500",
-        },
-        {
-            title: "Get your next",
-            subtitle: "New cute selfie",
-            images: [
-                "/slides/slide_2_1.jpg",
-                "/slides/slide_2_2.jpg",
-                "/slides/slide_2_3.jpg",
-                "/slides/slide_2_4.jpg",
-                "/slides/slide_2_5.jpg",
-                "/slides/slide_2_6.jpg",
-                "/slides/slide_2_7.jpg",
-            ],
-            color: "blue-500",
-        },
-        {
-            title: "Get your next",
-            subtitle: "New couple style",
-            images: [
-                "/slides/slide_3_1.jpg",
-                "/slides/slide_3_2.jpg",
-                "/slides/slide_3_3.jpg",
-                "/slides/slide_3_4.jpg",
-                "/slides/slide_3_5.jpg",
-                "/slides/slide_3_6.jpg",
-                "/slides/slide_3_7.jpg",
-            ],
-            color: "green-500",
-        },
-    ];
     return (
         <div className="relative h-full w-full px-[80px]">
             <Carousel
@@ -59,7 +16,7 @@ export function SlideExplore({ onButtonClick }) {
                 navigation={({ setActiveIndex, activeIndex, length }) => (
                     <div className="absolute left-0 top-0 z-40 flex justify-center items-center gap-2 w-full h-[80%]">
                         {" "}
-                        <div className="flex flex-col items-center justify-center gap-4 w-full">
+                        <div className="flex flex-col items-center justify-center w-full gap-4">
                             <Typography
                                 variant="h1"
                                 className=" text-black text-[60px] font-bold "
@@ -127,7 +84,7 @@ export function SlideExplore({ onButtonClick }) {
                                 }}
                             >
                                 <img
-                                    className="rounded-3xl w-full h-full object-cover object-center shadow-xl shadow-blue-gray-900/50"
+                                    className="object-cover object-center w-full h-full shadow-xl rounded-3xl shadow-blue-gray-900/50"
                                     src={image}
                                     alt={`slide_${imgIndex}`}
                                 />
@@ -136,7 +93,7 @@ export function SlideExplore({ onButtonClick }) {
                     </div>
                 ))}
             </Carousel>
-            <div className="absolute flex flex-col bottom-0 left-0">
+            <div className="absolute bottom-0 left-0 flex flex-col">
                 <div
                     className="w-screen z-30 h-[200px] flex flex-col-reverse"
                     style={{
@@ -147,17 +104,17 @@ export function SlideExplore({ onButtonClick }) {
                     {" "}
                     <div
                         onClick={onButtonClick}
-                        className="w-12 h-12 bg-blue-600 rounded-full animate-bounce mx-auto cursor-pointer z-40"
+                        className="z-40 w-12 h-12 mx-auto bg-blue-600 rounded-full cursor-pointer animate-bounce"
                     >
                         <div className="flex items-center justify-center h-full ">
-                            <ChevronDownIcon className="h-7 w-7 text-white" />
+                            <ChevronDownIcon className="text-white h-7 w-7" />
                         </div>
                     </div>
                 </div>
 
                 <div
                     onClick={onButtonClick}
-                    className="bg-yellow-200 w-screen z-40 cursor-pointer "
+                    className="z-40 w-screen bg-yellow-200 cursor-pointer "
                 >
                     <div className="flex items-center justify-center py-5 font-semibold text-md text-[#111111]">
                         <div className="flex items-center">
