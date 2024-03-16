@@ -1,6 +1,4 @@
 # Logs
-/backend
-/python-server
 logs
 *.log
 npm-debug.log*
