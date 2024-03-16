@@ -2,27 +2,70 @@ import { Typography, Slider, Button } from "@material-tailwind/react";
 import { LuChevronsLeft, LuChevronsRight } from "react-icons/lu";
 import CARTOONIFY_SLIDE_INFO from "../../constants/cartoon";
 import SKETCH_SLIDE_INFO from "../../constants/sketch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useImageUploadStore } from "../../states/imageUploadInfo";
+import { postService } from "../../services/postService";
 // eslint-disable-next-line react/prop-types
 export function SidePost({ isOpen, setOpen }) {
     const [blurValue, setBlurValue] = useState(50);
     const [sharpnessValue, setSharpnessValue] = useState(50);
     const [openSketch, setOpenSketch] = useState(false);
     const [disable, setDisable] = useState(false);
+    const [cache, setCache] = useState({});
     const { imageInfo, setImageInfo } = useImageUploadStore();
-    const handleChooseEffect = (name) => {
-        setDisable(true);
-        if (imageInfo.url) {
-            setImageInfo({ ...imageInfo, theme: name });
-            console.log(imageInfo);
-        } else {
-            console.log("Please upload an image");
-        }
-        setTimeout(() => {
-            setDisable(false);
-        }, 1000);
+    const [theme, setTheme] = useState("");
+    const handleSketch = () => {
+        setImageInfo({
+            sketch: {
+                isSketch: true,
+                blur: blurValue,
+                sharpness: sharpnessValue,
+            },
+        });
     };
+    useEffect(() => {
+        setCache({});
+    }, [imageInfo.url]);
+    useEffect(() => {
+        console.log(imageInfo);
+    }, [imageInfo]);
+    useEffect(() => {
+        const handleChooseEffect = async () => {
+            setDisable(true);
+            if (imageInfo.url) {
+                try {
+                    const updatedImageInfo = { ...imageInfo, theme: theme };
+
+                    if (!cache[theme]) {
+                        const response = await postService.cartoonify(
+                            updatedImageInfo
+                        );
+                        if (response.success) {
+                            setCache((prev) => ({
+                                ...prev,
+                                [theme]: response.imageURL,
+                            }));
+                            setImageInfo({ cartoonURL: response.imageURL });
+                        } else {
+                            console.log(response.error);
+                        }
+                    } else {
+                        setImageInfo({ cartoonURL: cache[theme] });
+                    }
+                    setImageInfo({ theme: theme });
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                console.log("Please upload an image");
+            }
+
+            setDisable(false);
+        };
+        handleChooseEffect();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [theme]);
+
     return (
         <div
             className={`h-full flex flex-col ${
@@ -103,7 +146,10 @@ export function SidePost({ isOpen, setOpen }) {
                                 className="w-full"
                             />
                             <div className="flex flex-row-reverse">
-                                <Button className="button button--secondary !bg-black !text-white hover:!opacity-80 !py-2">
+                                <Button
+                                    onClick={() => handleSketch()}
+                                    className="button button--secondary !bg-black !text-white hover:!opacity-80 !py-2"
+                                >
                                     Apply
                                 </Button>
                             </div>
@@ -112,12 +158,11 @@ export function SidePost({ isOpen, setOpen }) {
                     {CARTOONIFY_SLIDE_INFO.map((slide, index) => (
                         <div
                             key={index}
-                            onClick={() => handleChooseEffect(slide.name)}
+                            onClick={() => setTheme(slide.name)}
                             className={
                                 "h-[80px] w-full flex items-center gap-x-4 px-4 hover:bg-gray-100 cursor-pointer transition-all duration-200 " +
                                 (disable ? "pointer-events-none" : "")
                             }
-                            disabled={disable}
                         >
                             <div
                                 className="bg-gray-300 bg-center bg-cover rounded-lg size-20 shrink-0"

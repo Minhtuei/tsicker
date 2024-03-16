@@ -6,7 +6,13 @@ export const postService = {
                 `${import.meta.env.VITE_SERVERLESS_API_URL}`,
                 {
                     url: imageInfo.url,
-                    effect: imageInfo.effect,
+                    theme: imageInfo.theme,
+                    sketch: imageInfo.sketch,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                 }
             );
             return response.data;

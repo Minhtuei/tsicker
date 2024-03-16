@@ -9,7 +9,7 @@ export function ImagePost() {
     const { imageInfo, setImageInfo } = useImageUploadStore();
     const [imageUrl, handleUploadImage, clearImage] = useImageUpload();
     useEffect(() => {
-        setImageInfo({ ...imageInfo, url: imageUrl });
+        setImageInfo({ url: imageUrl, cartoonURL: "", theme: "" });
     }, [imageUrl]);
 
     return (
@@ -17,7 +17,7 @@ export function ImagePost() {
             {imageInfo.url ? (
                 <div className="max-w-[375px] rounded-3xl relative">
                     <img
-                        src={imageInfo.url}
+                        src={imageInfo.cartoonURL || imageInfo.url}
                         alt="post"
                         className="object-cover w-full h-full max-h-[700px] rounded-3xl"
                     />

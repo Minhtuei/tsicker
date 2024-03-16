@@ -10,7 +10,11 @@ export const useImageUploadStore = create(
                 blur: 0,
                 sharpness: 0,
             },
+            cartoonURL: "",
         },
-        setImageInfo: (value) => set({ imageInfo: value }),
+        setImageInfo: (value) =>
+            set((state) => ({
+                imageInfo: { ...state.imageInfo, ...value },
+            })),
     }))
 );
