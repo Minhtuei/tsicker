@@ -25,6 +25,9 @@ export function SidePost({ isOpen, setOpen }) {
     };
     useEffect(() => {
         setCache({});
+        setTheme("");
+        setBlurValue(50);
+        setSharpnessValue(50);
     }, [imageInfo.url]);
     useEffect(() => {
         console.log(imageInfo);

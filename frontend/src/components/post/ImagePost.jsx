@@ -4,10 +4,14 @@ import { Typography } from "@material-tailwind/react";
 import { HiOutlineXMark } from "react-icons/hi2";
 import { useImageUploadStore } from "../../states/imageUploadInfo";
 import useImageUpload from "../../hooks/useImageUpload";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import ReactCompareImage from "react-compare-image";
+
 export function ImagePost() {
     const { imageInfo, setImageInfo } = useImageUploadStore();
     const [imageUrl, handleUploadImage, clearImage] = useImageUpload();
+    const [openDialog, setOpenDialog] = useState(false);
+    const handleOpenDialog = () => setOpenDialog(!openDialog);
     useEffect(() => {
         setImageInfo({ url: imageUrl, cartoonURL: "", theme: "" });
     }, [imageUrl]);
@@ -15,12 +19,31 @@ export function ImagePost() {
     return (
         <>
             {imageInfo.url ? (
-                <div className="max-w-[375px] rounded-3xl relative">
-                    <img
-                        src={imageInfo.cartoonURL || imageInfo.url}
-                        alt="post"
-                        className="object-cover w-full h-full max-h-[700px] rounded-3xl"
-                    />
+                <div className="max-w-[375px] rounded-3xl relative w-[375px] select-none">
+                    {imageInfo.cartoonURL ? (
+                        <ReactCompareImage
+                            leftImage={imageInfo.url}
+                            rightImage={imageInfo.cartoonURL || imageInfo.url}
+                            leftImageCss={{
+                                borderRadius: "2.5rem",
+                                objectFit: "cover",
+                            }}
+                            rightImageCss={{
+                                borderRadius: "2.5rem",
+                                objectFit: "cover",
+                            }}
+                            aspectRatio="wider"
+                            sliderPositionPercentage={0}
+                        />
+                    ) : (
+                        <img
+                            src={imageInfo.url}
+                            alt="post"
+                            className="object-cover w-full h-full max-h-[700px] rounded-3xl"
+                            onClick={() => handleOpenDialog()}
+                        />
+                    )}
+
                     <HiOutlineXMark
                         className="absolute transition-all duration-300 bg-white rounded-full cursor-pointer top-2 right-3 size-8 hover:bg-gray-200"
                         onClick={() => clearImage()}
