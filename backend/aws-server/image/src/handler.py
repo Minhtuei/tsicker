@@ -1,11 +1,7 @@
-# # Define imports
-# try:
-#     import unzip_requirements
-# except ImportError:
-#     pass
 import json
 from Transformer import Transformer
 from AnimeGan import AnimeGAN
+from Sketch import Sketch
 from Paint import Paint
 from Utils import *
 import boto3
@@ -27,8 +23,9 @@ mapping_name_to_model = {
     "Paprika 2": "Paprika_54.onnx",
     "Shinkai 2": "Shinkai_53.onnx",
     "Oil Paint": "OilPainting.onnx",
+    "PortraitSketch": "PortraitSketch.onnx",
+    "Sketch": "Sketch.onnx"
 }
-
 def image_handler(img):
     img_url = img["url"]
     img_theme = img["theme"]
@@ -40,7 +37,7 @@ def image_handler(img):
     else:
         raise ValueError("Invalid model")
     return img_url,img_format, img_theme, img_sketch
-def load_model(s3,bucket, img_theme):
+def load_model(s3,bucket, img_theme,blur=3,sharpness=10):
     loaded_model = None
     model_file = mapping_name_to_model.get(img_theme)
     if model_file:
@@ -54,6 +51,9 @@ def load_model(s3,bucket, img_theme):
         elif model_file.endswith(".onnx"):
             if model_file == "OilPainting.onnx":
                 model = Paint()
+                loaded_model = model
+            elif model_file == "Sketch.onnx":
+                model = Sketch(blur_simga=blur, sharpen_value=sharpness)
                 loaded_model = model
             else:
                 response = s3.get_object(Bucket=bucket, Key="models/{}".format(model_file))
@@ -79,8 +79,10 @@ def lambda_handler(event, context):
             img_url,img_format, img_theme, img_sketch = image_handler(img)
         else:
             img_url,img_format, img_theme, img_sketch = image_handler(event)   
-        model = load_model(s3,bucket, img_theme)
         output_image = None
+        blur = img_sketch["blur"]
+        sharpness = img_sketch["sharpness"]
+        model = load_model(s3,bucket, img_theme,blur,sharpness)
         if type(model) == Transformer:
             output_image = cartoonify(model=model, input_image=img_url,gpu=-1)
             output_image = convert_to_base64(output_image,img_format,"PIL") 
@@ -89,6 +91,9 @@ def lambda_handler(event, context):
             output_image = convert_to_base64(output_image,img_format,"cv2")
         elif type(model) == Paint:
             output_image = model.oil_paint(img_url)
+            output_image = convert_to_base64(output_image,img_format,"cv2")
+        else:
+            output_image = sketch(image=img_url,model=model)
             output_image = convert_to_base64(output_image,img_format,"cv2")
         return {
                 'statusCode': 200,
@@ -107,3 +112,5 @@ def lambda_handler(event, context):
                 "error": str(e)
             }),
         }
+
+

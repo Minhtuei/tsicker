@@ -1,11 +1,13 @@
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, Typography, Spinner } from "@material-tailwind/react";
 import { useState } from "react";
 import { NavigationBar } from "../components/NavigationBar";
 import { FormPost } from "../components/post/FormPost";
 import { ImagePost } from "../components/post/ImagePost";
 import { SidePost } from "../components/post/SidePost";
+import { useImageUploadStore } from "../states/imageUploadInfo";
 export function CreatePostPage() {
     const [openTheme, setOpenTheme] = useState(false);
+    const { isLoading } = useImageUploadStore();
     return (
         <div className="h-screen overflow-hidden">
             <NavigationBar />
@@ -34,6 +36,19 @@ export function CreatePostPage() {
                         </div>
                     </div>
                 </div>
+                {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="flex items-center p-4 bg-white rounded-lg">
+                            <Typography
+                                className="mr-2 text-lg italic font-semibold"
+                                size="xl"
+                            >
+                                Generating Image
+                            </Typography>
+                            <Spinner className="w-8 h-8" />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

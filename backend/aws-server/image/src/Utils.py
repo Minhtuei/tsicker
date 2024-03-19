@@ -4,6 +4,7 @@ from PIL import Image
 from io import BytesIO
 import torchvision.transforms as transforms
 from torch.autograd import Variable
+from Sketch import Sketch
 import numpy as np
 import torch
 def resize_crop(image):
@@ -91,6 +92,12 @@ def cartoonify(model,input_image,load_size=450,gpu=0):
     output_image = Image.fromarray(output_image)
     return output_image
 def animeGan(model,image):
+    image = resize_crop(image)
+    for frame in [image]:
+        frame = model(frame)
+    return frame
+
+def sketch(image,model):
     image = resize_crop(image)
     for frame in [image]:
         frame = model(frame)

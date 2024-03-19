@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { MdOutlineFileUpload } from "react-icons/md";
-import { Typography } from "@material-tailwind/react";
+import { Typography, Tooltip } from "@material-tailwind/react";
 import { HiOutlineXMark } from "react-icons/hi2";
 import { useImageUploadStore } from "../../states/imageUploadInfo";
 import useImageUpload from "../../hooks/useImageUpload";
@@ -21,20 +21,29 @@ export function ImagePost() {
             {imageInfo.url ? (
                 <div className="max-w-[375px] rounded-3xl relative w-[375px] select-none">
                     {imageInfo.cartoonURL ? (
-                        <ReactCompareImage
-                            leftImage={imageInfo.url}
-                            rightImage={imageInfo.cartoonURL || imageInfo.url}
-                            leftImageCss={{
-                                borderRadius: "2.5rem",
-                                objectFit: "cover",
-                            }}
-                            rightImageCss={{
-                                borderRadius: "2.5rem",
-                                objectFit: "cover",
-                            }}
-                            aspectRatio="wider"
-                            sliderPositionPercentage={0}
-                        />
+                        <Tooltip
+                            content="Drag this slider to compare two images"
+                            placement="left"
+                        >
+                            <div className="div">
+                                <ReactCompareImage
+                                    leftImage={imageInfo.url}
+                                    rightImage={
+                                        imageInfo.cartoonURL || imageInfo.url
+                                    }
+                                    leftImageCss={{
+                                        borderRadius: "2.5rem",
+                                        objectFit: "cover",
+                                    }}
+                                    rightImageCss={{
+                                        borderRadius: "2.5rem",
+                                        objectFit: "cover",
+                                    }}
+                                    aspectRatio="wider"
+                                    sliderPositionPercentage={0}
+                                />
+                            </div>
+                        </Tooltip>
                     ) : (
                         <img
                             src={imageInfo.url}

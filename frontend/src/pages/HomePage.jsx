@@ -38,10 +38,10 @@ export function HomePage() {
     }, [targetRef]);
     const { isAuthenticated } = useUserStore();
     return (
-        <div className="relative w-screen h-screen overflow-x-hidden">
+        <div className="relative w-screen overflow-x-hidden">
             <NavigationBar />
             {!isAuthenticated ? (
-                <div className="h-full snap-mandatory snap-y overflow-y-auto scrollbar-hide">
+                <div className="h-screen overflow-y-auto snap-mandatory snap-y scrollbar-hide">
                     {COMPONENTS.map((Component, index) => (
                         <div
                             key={index}

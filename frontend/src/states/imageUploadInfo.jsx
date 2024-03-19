@@ -6,15 +6,16 @@ export const useImageUploadStore = create(
             url: "",
             theme: "",
             sketch: {
-                isSketch: false,
-                blur: 0,
-                sharpness: 0,
+                blur: 3,
+                sharpness: 10,
             },
             cartoonURL: "",
         },
+        isLoading: false,
         setImageInfo: (value) =>
             set((state) => ({
                 imageInfo: { ...state.imageInfo, ...value },
             })),
+        setIsLoading: (value) => set({ isLoading: value }),
     }))
 );

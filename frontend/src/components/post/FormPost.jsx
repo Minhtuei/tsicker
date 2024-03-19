@@ -7,6 +7,15 @@ import {
     Switch,
 } from "@material-tailwind/react";
 export function FormPost() {
+    const COLLETIONS = [
+        "Favorite",
+        "Trending",
+        "Tasks",
+        "Projects",
+        "Work",
+        "Personal",
+        "Others",
+    ];
     return (
         <>
             <div className="flex flex-col">
@@ -89,11 +98,11 @@ export function FormPost() {
                         className: "h-12 min-w-full",
                     }}
                 >
-                    <Option>Material Tailwind HTML</Option>
-                    <Option>Material Tailwind React</Option>
-                    <Option>Material Tailwind Vue</Option>
-                    <Option>Material Tailwind Angular</Option>
-                    <Option>Material Tailwind Svelte</Option>
+                    {COLLETIONS.map((collection) => (
+                        <Option key={collection} value={collection}>
+                            {collection}
+                        </Option>
+                    ))}
                 </Select>
             </div>
             <div className="flex flex-col gap-y-2">
