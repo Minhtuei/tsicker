@@ -39,6 +39,10 @@ export const authService = {
         }
         try {
             const response = await axios.get(`${API_URL}/auth/verify`);
+            if (!response.data.success) {
+                localStorage.removeItem(import.meta.env.VITE_ACCESS_TOKEN_NAME);
+                setAuthToken(null);
+            }
             return response.data;
         } catch (error) {
             if (error.response.data) return error.response.data;

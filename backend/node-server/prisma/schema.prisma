@@ -53,10 +53,11 @@ model download {
 model image {
   id       String     @id @default(dbgenerated("public.uuid_generate_v4()")) @db.Uuid
   style    String?    @db.VarChar(255)
-  price    Float?
+  price    Float?     @default(0)
   post_id  String?    @db.Uuid
   download download[]
   post     post?      @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  url      String     @db.VarChar(255)
 }
 
 model interact {
@@ -74,17 +75,19 @@ model interact {
 }
 
 model post {
-  id           String         @id @default(dbgenerated("public.uuid_generate_v4()")) @db.Uuid
-  title        String         @db.VarChar(50)
-  description  String?
-  date_created DateTime?      @default(now()) @db.Timestamp(6)
-  user_id      String?        @db.Uuid
-  comment      comment[]
-  contain_post contain_post[]
-  image        image[]
-  interact     interact[]
-  user         user?          @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  tag          tag[]
+  id              String         @id @default(dbgenerated("public.uuid_generate_v4()")) @db.Uuid
+  title           String         @db.VarChar(50)
+  description     String?
+  date_created    DateTime?      @default(now()) @db.Timestamp(6)
+  user_id         String?        @db.Uuid
+  comment         comment[]
+  contain_post    contain_post[]
+  image           image[]
+  interact        interact[]
+  user            user?          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  tag             tag[]
+  link            String?        @db.VarChar(255)
+  commentsEnabled Boolean        @default(true)
 }
 
 model reaction {

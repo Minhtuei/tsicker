@@ -20,6 +20,9 @@
     cursor: zoom-in;
 }
 @layer utilities {
+    .right-nav {
+        @apply p-2 bg-inherit shadow-none rounded hover:!shadow-none hover:!underline underline-offset-1 hover:!underline-offset-1 text-[#111111] text-lg capitalize;
+    }
     .button {
         @apply shadow-none hover:!shadow-none rounded-full transition-all duration-300 ease-in-out;
     }
@@ -28,5 +31,11 @@
     }
     .button--secondary {
         @apply px-3 py-3 bg-gray-300 hover:bg-gray-400 text-[#111111] text-lg capitalize;
+    }
+    .button--navigate {
+        @apply p-2 bg-inherit shadow-none hover:!shadow-none hover:!bg-gray-300 text-[#111111] text-lg capitalize font-semibold rounded-3xl min-w-[60px];
+    }
+    .button--navigate--active {
+        @apply p-2 bg-[black] shadow-none hover:!shadow-none text-white text-lg capitalize font-semibold rounded-3xl select-none min-w-[60px];
     }
 }

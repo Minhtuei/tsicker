@@ -12,12 +12,14 @@ const pg = require("pg");
 const url = require("url");
 const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/auth");
+const postRouter = require("./routes/post");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/post", postRouter);
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });

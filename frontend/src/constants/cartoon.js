@@ -8,5 +8,6 @@ const CARTOONIFY_SLIDE_INFO = [
     { name: "Hayao 1", url: "/cartoon/mn_Hayao_1.jpg" },
     { name: "Hayao 2", url: "/cartoon/mn_Hayao_2.jpg" },
     { name: "Hayao 3", url: "/cartoon/mn_Hayao_3.jpg" },
+    { name: "PortraitSketch", url: "/cartoon/mn_ps.jpg" },
 ];
 export default CARTOONIFY_SLIDE_INFO;

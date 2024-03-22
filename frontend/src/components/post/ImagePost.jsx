@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { MdOutlineFileUpload } from "react-icons/md";
 import { Typography, Tooltip } from "@material-tailwind/react";
@@ -8,12 +9,18 @@ import { useState, useEffect } from "react";
 import ReactCompareImage from "react-compare-image";
 
 export function ImagePost() {
-    const { imageInfo, setImageInfo } = useImageUploadStore();
-    const [imageUrl, handleUploadImage, clearImage] = useImageUpload();
+    const { imageInfo, setImageInfo, setSize } = useImageUploadStore();
+    const [imageUrl, handleUploadImage, clearImage, imageSize] =
+        useImageUpload();
     const [openDialog, setOpenDialog] = useState(false);
     const handleOpenDialog = () => setOpenDialog(!openDialog);
     useEffect(() => {
-        setImageInfo({ url: imageUrl, cartoonURL: "", theme: "" });
+        setImageInfo({
+            url: imageUrl,
+            cartoonURL: "",
+            theme: "",
+        });
+        setSize(imageSize);
     }, [imageUrl]);
 
     return (

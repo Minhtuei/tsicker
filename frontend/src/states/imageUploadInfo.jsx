@@ -12,10 +12,12 @@ export const useImageUploadStore = create(
             cartoonURL: "",
         },
         isLoading: false,
+        size: 0,
         setImageInfo: (value) =>
             set((state) => ({
                 imageInfo: { ...state.imageInfo, ...value },
             })),
         setIsLoading: (value) => set({ isLoading: value }),
+        setSize: (value) => set({ size: value }),
     }))
 );

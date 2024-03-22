@@ -6,73 +6,67 @@ import { useEffect, useState } from "react";
 import { useImageUploadStore } from "../../states/imageUploadInfo";
 import { postService } from "../../services/postService";
 // eslint-disable-next-line react/prop-types
-export function SidePost({ isOpen, setOpen }) {
+export function SidePost({ isOpen, setOpen, setHasImage }) {
     const [blurValue, setBlurValue] = useState(3);
     const [sharpnessValue, setSharpnessValue] = useState(10);
     const [openSketch, setOpenSketch] = useState(false);
     const [cache, setCache] = useState({});
     const { imageInfo, setImageInfo, setIsLoading } = useImageUploadStore();
-    const [theme, setTheme] = useState("");
-    const [sketch, setSketch] = useState(false);
     useEffect(() => {
         setCache({});
-        setTheme("");
         setBlurValue(3);
         setSharpnessValue(10);
     }, [imageInfo.url]);
-    useEffect(() => {
-        console.log(imageInfo);
-    }, [imageInfo]);
+    // useEffect(() => {
+    //     console.log(imageInfo);
+    //     console.log(size / 1000 / 1000);
+    // }, [imageInfo, size]);
+    const handleChooseEffect = async (theme) => {
+        if (imageInfo.url) {
+            try {
+                const updatedImageInfo = {
+                    ...imageInfo,
+                    theme: theme,
+                    sketch:
+                        theme === "Sketch"
+                            ? { blur: blurValue, sharpness: sharpnessValue }
+                            : imageInfo.sketch,
+                };
 
-    useEffect(() => {
-        const handleChooseEffect = async () => {
-            if (imageInfo.url) {
-                try {
-                    const updatedImageInfo = {
-                        ...imageInfo,
-                        theme: theme,
-                        sketch:
+                if (!cache[theme]) {
+                    setIsLoading(true);
+                    const response = await postService.cartoonify(
+                        updatedImageInfo
+                    );
+                    setIsLoading(false);
+                    if (response.success) {
+                        setCache((prev) =>
                             theme === "Sketch"
-                                ? { blur: blurValue, sharpness: sharpnessValue }
-                                : imageInfo.sketch,
-                    };
-
-                    if (!cache[theme]) {
-                        setIsLoading(true);
-                        const response = await postService.cartoonify(
-                            updatedImageInfo
+                                ? {
+                                      ...prev,
+                                      [theme
+                                          .concat(blurValue)
+                                          .concat(sharpnessValue)]:
+                                          response.imageURL,
+                                  }
+                                : { ...prev, [theme]: response.imageURL }
                         );
-                        setIsLoading(false);
-                        if (response.success) {
-                            setCache((prev) =>
-                                theme === "Sketch"
-                                    ? {
-                                          ...prev,
-                                          [theme
-                                              .concat(blurValue)
-                                              .concat(sharpnessValue)]:
-                                              response.imageURL,
-                                      }
-                                    : { ...prev, [theme]: response.imageURL }
-                            );
-                            setImageInfo({ cartoonURL: response.imageURL });
-                        } else {
-                            console.log(response.error);
-                        }
+                        setImageInfo({ cartoonURL: response.imageURL });
                     } else {
-                        setImageInfo({ cartoonURL: cache[theme] });
+                        console.log(response.error);
                     }
-                    setImageInfo({ theme: theme });
-                } catch (error) {
-                    console.log(error);
+                } else {
+                    setImageInfo({ cartoonURL: cache[theme] });
                 }
-            } else {
-                console.log("Please upload an image");
+                setImageInfo({ theme: theme });
+            } catch (error) {
+                console.log(error);
             }
-        };
-        handleChooseEffect();
+        } else {
+            setHasImage(false);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [theme, sketch]);
+    };
 
     return (
         <div
@@ -155,8 +149,7 @@ export function SidePost({ isOpen, setOpen }) {
                             <div className="flex flex-row-reverse">
                                 <Button
                                     onClick={() => {
-                                        setTheme("Sketch");
-                                        setSketch((prev) => !prev);
+                                        handleChooseEffect("Sketch");
                                     }}
                                     className="button button--secondary !bg-black !text-white hover:!opacity-80 !py-2"
                                 >
@@ -169,8 +162,7 @@ export function SidePost({ isOpen, setOpen }) {
                         <div
                             key={index}
                             onClick={() => {
-                                setTheme(slide.name);
-                                setSketch((prev) => !prev);
+                                handleChooseEffect(slide.name);
                             }}
                             className="h-[80px] w-full flex items-center gap-x-4 px-4 hover:bg-gray-100 cursor-pointer transition-all duration-200 "
                         >

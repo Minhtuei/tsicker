@@ -12,12 +12,10 @@ import { useAuthFormStore } from "../states/authFormState";
 import { useUserStore } from "../states/userInfoState";
 import { Login } from "./Login";
 import { Register } from "./Register";
+import { useLocation } from "react-router-dom";
 export function NavigationBar() {
     const RIGHT_NAV_LIST = ["About", "Business", "Blog"];
-    const RIGHT_NAV_CLASSNAME =
-        "p-2 bg-inherit shadow-none rounded-xl hover:shadow-none hover:underline underline-offset-1 hover:underline-offset-1 text-[#111111] text-lg capitalize ";
-    // const AUTH_BUTTON_CLASSNAME =
-    //     "px-3 py-2 shadow-none rounded-full hover:shadow-none text-lg capitalize transition-all duration-300 min-w-[100px]";
+    const location = useLocation();
     const { setOpenLogin, setOpenSignUp, setFromNavBar } = useAuthFormStore();
     const { isAuthenticated } = useUserStore();
     const [isSearch, setIsSearch] = useState(false);
@@ -38,36 +36,50 @@ export function NavigationBar() {
             <div className="flex justify-between items-center p-4 fixed top-0 bg-white w-screen z-[999] h-[80px]">
                 <div className="flex items-center w-full py-1 gap-x-4">
                     {!isAuthenticated && (
-                        <div className="flex items-center cursor-pointer">
-                            <img src={logo} alt="logo" className="h-10" />
-                            <Typography className="text-xl font-bold text-[#cc0000]">
-                                TSICKER
-                            </Typography>
-                        </div>
+                        <Link to="/">
+                            <div className="flex items-center cursor-pointer select-none">
+                                <img src={logo} alt="logo" className="h-10" />
+                                <Typography className="text-xl font-bold text-[#cc0000]">
+                                    TSICKER
+                                </Typography>
+                            </div>
+                        </Link>
                     )}
 
                     {isAuthenticated ? (
                         <>
                             <div className="flex items-center">
-                                <div className="flex items-center cursor-pointer w-[150px]">
-                                    <img
-                                        src={logo}
-                                        alt="logo"
-                                        className="h-10"
-                                    />
-                                    <Typography className="text-xl font-bold text-[#cc0000]">
-                                        TSICKER
-                                    </Typography>
-                                </div>
                                 <Link to="/">
-                                    <Button className="p-2 bg-[black] shadow-none hover:shadow-none text-white text-lg capitalize font-lg rounded-3xl select-none min-w-[60px]">
+                                    <div className="flex items-center cursor-pointer w-[150px] select-none">
+                                        <img
+                                            src={logo}
+                                            alt="logo"
+                                            className="h-10"
+                                        />
+                                        <Typography className="text-xl font-bold text-[#cc0000]">
+                                            TSICKER
+                                        </Typography>
+                                    </div>
+                                </Link>
+                                <Link to="/">
+                                    <Button
+                                        className={
+                                            location.pathname === "/"
+                                                ? "button--navigate--active"
+                                                : "button--navigate"
+                                        }
+                                    >
                                         Home
                                     </Button>
                                 </Link>
 
-                                <Link to="/create/">
+                                <Link to="/create">
                                     <Button
-                                        className="p-2 bg-inherit shadow-none hover:shadow-none hover:bg-gray-300 text-[#111111] text-lg capitalize font-lg rounded-3xl min-w-[60px]"
+                                        className={
+                                            location.pathname === "/create"
+                                                ? "button--navigate--active"
+                                                : "button--navigate"
+                                        }
                                         color="gray"
                                     >
                                         Create
@@ -148,7 +160,7 @@ export function NavigationBar() {
                 {!isAuthenticated && (
                     <div className="flex items-center h-full gap-x-4">
                         {RIGHT_NAV_LIST.map((item, index) => (
-                            <Button key={index} className={RIGHT_NAV_CLASSNAME}>
+                            <Button key={index} className="right-nav">
                                 {item}
                             </Button>
                         ))}

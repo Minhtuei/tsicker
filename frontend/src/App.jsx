@@ -4,6 +4,7 @@ import { CreatePostPage } from "./pages/CreatePostPage";
 import { useEffect } from "react";
 import { useUserStore } from "./states/userInfoState";
 import { authService } from "./services/authService";
+import { ProtectedRoute } from "./utils/ProtectedRoute";
 export function App() {
     const { setUserInfo, setIsAuthenticated, authLoading, setAuthLoading } =
         useUserStore();
@@ -31,7 +32,14 @@ export function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/create" element={<CreatePostPage />} />
+                <Route
+                    path="/create"
+                    element={
+                        <ProtectedRoute>
+                            <CreatePostPage />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </Router>
     );
