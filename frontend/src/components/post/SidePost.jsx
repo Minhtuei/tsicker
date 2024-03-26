@@ -17,10 +17,6 @@ export function SidePost({ isOpen, setOpen, setHasImage }) {
         setBlurValue(3);
         setSharpnessValue(10);
     }, [imageInfo.url]);
-    // useEffect(() => {
-    //     console.log(imageInfo);
-    //     console.log(size / 1000 / 1000);
-    // }, [imageInfo, size]);
     const handleChooseEffect = async (theme) => {
         if (imageInfo.url) {
             try {

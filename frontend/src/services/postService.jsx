@@ -21,4 +21,21 @@ export const postService = {
             else return { success: false, error: error.message };
         }
     },
+    uploadPost: async (postInfo) => {
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_REACT_API_URL}/post/create`,
+                postInfo,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, error: error.message };
+        }
+    },
 };

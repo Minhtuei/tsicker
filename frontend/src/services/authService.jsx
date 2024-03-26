@@ -67,8 +67,8 @@ export const authService = {
             }
             return response.data;
         } catch (error) {
-            // localStorage.removeItem(import.meta.env.VITE_ACCESS_TOKEN_NAME);
-            // setAuthToken(null);
+            localStorage.removeItem(import.meta.env.VITE_ACCESS_TOKEN_NAME);
+            setAuthToken(null);
             return { success: false, error: error.response.data };
         }
     },

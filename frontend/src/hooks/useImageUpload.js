@@ -1,20 +1,14 @@
 import { useState, useCallback } from "react";
 
 const useImageUpload = () => {
-    const [imageUrl, setImageUrl] = useState("");
-    const [imageSize, setImageSize] = useState(0);
+    const [file, setFile] = useState(null);
     const handleUploadImage = useCallback(() => {
         const fileInput = document.createElement("input");
         fileInput.type = "file";
         fileInput.onchange = () => {
             const file = fileInput.files[0];
-            const reader = new FileReader();
             if (file) {
-                reader.onload = (e) => {
-                    setImageUrl(e.target.result);
-                    setImageSize(file.size);
-                };
-                reader.readAsDataURL(file);
+                setFile(file);
             }
         };
         fileInput.value = null;
@@ -22,10 +16,10 @@ const useImageUpload = () => {
     }, []);
 
     const clearImage = useCallback(() => {
-        setImageUrl("");
+        setFile(null);
     }, []);
 
-    return [imageUrl, handleUploadImage, clearImage, imageSize];
+    return [file, handleUploadImage, clearImage];
 };
 
 export default useImageUpload;

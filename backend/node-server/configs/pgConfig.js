@@ -1,5 +1,5 @@
 require("dotenv").config();
-const config = {
+const pgConfig = {
     user: process.env.DB_USER,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
@@ -34,4 +34,5 @@ tisqA61bVtYyfN5DV/1ufbtNW0Im2yECEKp+zoUYU0ttrUR4HQ==
 -----END CERTIFICATE-----`,
     },
 };
-module.exports = config;
+
+module.exports = pgConfig;

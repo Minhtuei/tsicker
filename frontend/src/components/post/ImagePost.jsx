@@ -7,21 +7,36 @@ import { useImageUploadStore } from "../../states/imageUploadInfo";
 import useImageUpload from "../../hooks/useImageUpload";
 import { useState, useEffect } from "react";
 import ReactCompareImage from "react-compare-image";
-
+import { getImageUrl } from "../../utils/convertImageFile";
 export function ImagePost() {
-    const { imageInfo, setImageInfo, setSize } = useImageUploadStore();
-    const [imageUrl, handleUploadImage, clearImage, imageSize] =
-        useImageUpload();
+    const { imageInfo, setImageInfo, setImageFile } = useImageUploadStore();
+    const [file, handleUploadImage, clearImage] = useImageUpload();
     const [openDialog, setOpenDialog] = useState(false);
     const handleOpenDialog = () => setOpenDialog(!openDialog);
     useEffect(() => {
-        setImageInfo({
-            url: imageUrl,
-            cartoonURL: "",
-            theme: "",
-        });
-        setSize(imageSize);
-    }, [imageUrl]);
+        const fetchImageUrl = async () => {
+            if (file) {
+                setImageFile(file);
+                try {
+                    const url = await getImageUrl(file);
+                    setImageInfo({ url });
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                setImageInfo({
+                    url: "",
+                    cartoonURL: "",
+                    theme: "",
+                    sketch: {},
+                    style: "",
+                });
+                setImageFile(null);
+            }
+        };
+        fetchImageUrl();
+        console.log(file);
+    }, [file]);
 
     return (
         <>

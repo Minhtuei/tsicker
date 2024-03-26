@@ -9,6 +9,9 @@ import { useForm } from "react-hook-form"; // Import useForm and FormProvider
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Alert } from "@material-tailwind/react";
+import { useUserStore } from "../states/userInfoState";
+import { postService } from "../services/postService";
+import { getFile } from "../utils/convertImageFile";
 export function CreatePostPage() {
     const [openTheme, setOpenTheme] = useState(false);
     const [hasImage, setHasImage] = useState(true);
@@ -31,19 +34,29 @@ export function CreatePostPage() {
     } = useForm({
         resolver: yupResolver(schema),
     });
-    const { imageInfo, size } = useImageUploadStore();
-    const onSubmit = (data) => {
-        const url = imageInfo.cartoonURL || imageInfo.url;
-        if (!url) {
+    const { imageInfo, imageFile } = useImageUploadStore();
+    const { userInfo } = useUserStore();
+    const onSubmit = async (data) => {
+        const file = imageInfo.cartoonURL
+            ? await getFile(imageInfo.cartoonURL)
+            : imageFile;
+        if (!file) {
             setHasImage(false);
             return;
         }
-        data = {
-            ...data,
-            image: { url, size },
-        };
-
-        console.log(data);
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => formData.append(key, data[key]));
+        formData.append("file", file);
+        formData.append("user_id", userInfo.id);
+        formData.append("style", imageInfo.theme);
+        try {
+            const response = await postService.uploadPost(formData);
+            if (response.status === 201) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -87,10 +100,7 @@ export function CreatePostPage() {
                         <div className="box-border flex flex-col h-full pt-4">
                             <div className="flex flex-1">
                                 <div className="px-4 basis-2/5">
-                                    <ImagePost
-                                        register={register}
-                                        errors={errors}
-                                    />
+                                    <ImagePost />
                                 </div>
                                 <div className="flex flex-col w-full h-full gap-4 px-4 basis-3/5 gap-y-6">
                                     <FormPost

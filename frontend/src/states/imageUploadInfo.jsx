@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 export const useImageUploadStore = create(
     devtools((set) => ({
+        imageFile: null,
         imageInfo: {
             url: "",
             theme: "",
@@ -12,12 +13,11 @@ export const useImageUploadStore = create(
             cartoonURL: "",
         },
         isLoading: false,
-        size: 0,
         setImageInfo: (value) =>
             set((state) => ({
                 imageInfo: { ...state.imageInfo, ...value },
             })),
+        setImageFile: (value) => set({ imageFile: value }),
         setIsLoading: (value) => set({ isLoading: value }),
-        setSize: (value) => set({ size: value }),
     }))
 );

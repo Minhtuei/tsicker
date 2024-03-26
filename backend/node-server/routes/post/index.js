@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const postController = require("../../controllers/PostController");
-router.post("/create", postController.createPost);
+const upload = require("../../middlewares/multer");
+router.post("/create", upload, postController.createPost);
 module.exports = router;
