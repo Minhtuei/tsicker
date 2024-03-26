@@ -10,17 +10,14 @@ export function App() {
         useUserStore();
     useEffect(() => {
         const fetchDataAndDelay = async () => {
-            try {
-                const response = await authService.verify();
-                if (response.success) {
-                    setUserInfo(response.user);
-                    setIsAuthenticated(true);
-                }
-                setAuthLoading(false);
-            } catch (error) {
-                // Handle error
-                console.error("Error fetching data:", error);
+            const response = await authService.verify();
+            if (response.success) {
+                setUserInfo(response.user);
+                setIsAuthenticated(true);
+            } else {
+                console.log(response.error);
             }
+            setAuthLoading(false);
         };
         fetchDataAndDelay();
         // eslint-disable-next-line react-hooks/exhaustive-deps

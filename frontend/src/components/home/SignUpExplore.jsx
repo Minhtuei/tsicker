@@ -14,7 +14,7 @@ export function SignUpExplore() {
                     backgroundRepeat: "no-repeat",
                 }}
             >
-                <div className="flex justify-center items-center w-1/2 h-full">
+                <div className="flex items-center justify-center w-1/2 h-full">
                     <div className="flex flex-col items-center justify-center gap-4 text-center h-1/2">
                         <Typography
                             variant="h1"
@@ -24,7 +24,7 @@ export function SignUpExplore() {
                         </Typography>
                     </div>
                 </div>
-                <div className="w-1/2 flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center w-1/2">
                     <div className="h-[50px]"></div>
                     {!fromNavBar && (
                         <div className="!w-[600px] ">

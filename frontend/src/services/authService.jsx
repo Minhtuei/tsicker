@@ -4,10 +4,16 @@ const API_URL = import.meta.env.VITE_REACT_API_URL;
 export const authService = {
     login: async (userFormData) => {
         try {
-            const response = await axios.post(`${API_URL}/auth/login`, {
-                username: userFormData.username,
-                password: userFormData.password,
-            });
+            const response = await axios.post(
+                `${API_URL}/auth/login`,
+                {
+                    username: userFormData.username,
+                    password: userFormData.password,
+                },
+                {
+                    withCredentials: true,
+                }
+            );
             if (response.data.success) {
                 localStorage.setItem(
                     import.meta.env.VITE_ACCESS_TOKEN_NAME,
@@ -39,14 +45,31 @@ export const authService = {
         }
         try {
             const response = await axios.get(`${API_URL}/auth/verify`);
-            if (!response.data.success) {
-                localStorage.removeItem(import.meta.env.VITE_ACCESS_TOKEN_NAME);
-                setAuthToken(null);
+            return response.data;
+        } catch (error) {
+            return authService.refreshAccessToken();
+        }
+    },
+    refreshAccessToken: async () => {
+        try {
+            const response = await axios.post(
+                `${API_URL}/auth/refreshToken`,
+                {},
+                {
+                    withCredentials: true,
+                }
+            );
+            if (response.data.success) {
+                localStorage.setItem(
+                    import.meta.env.VITE_ACCESS_TOKEN_NAME,
+                    response.data.accessToken
+                );
             }
             return response.data;
         } catch (error) {
-            if (error.response.data) return error.response.data;
-            else return { success: false, error: error.message };
+            // localStorage.removeItem(import.meta.env.VITE_ACCESS_TOKEN_NAME);
+            // setAuthToken(null);
+            return { success: false, error: error.response.data };
         }
     },
 };

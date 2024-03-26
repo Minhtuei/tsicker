@@ -131,7 +131,7 @@ const verify = async (req, res) => {
         return res.status(400).json({ success: false, error: err.message });
     }
 };
-const refreshToken = async (req, res) => {
+const refreshAccessToken = async (req, res) => {
     const cookie = req.cookies;
     if (!cookie && !cookie.refreshToken) {
         return res
@@ -187,6 +187,6 @@ module.exports = {
     login,
     register,
     verify,
-    refreshToken,
+    refreshAccessToken,
     logout,
 };
