@@ -15,7 +15,7 @@ export function App() {
                 setUserInfo(response.user);
                 setIsAuthenticated(true);
             } else {
-                console.log(response.error);
+                window.location.reload();
             }
             setAuthLoading(false);
         };

@@ -15,6 +15,9 @@ import { getFile } from "../utils/convertImageFile";
 export function CreatePostPage() {
     const [openTheme, setOpenTheme] = useState(false);
     const [hasImage, setHasImage] = useState(true);
+    const [isUploading, setIsUploading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isAlert, setIsAlert] = useState(false);
     const { isLoading } = useImageUploadStore();
     const schema = yup.object().shape({
         title: yup.string().required("Title is required").max(50),
@@ -37,11 +40,17 @@ export function CreatePostPage() {
     const { imageInfo, imageFile } = useImageUploadStore();
     const { userInfo } = useUserStore();
     const onSubmit = async (data) => {
+        setIsUploading(true);
         const file = imageInfo.cartoonURL
             ? await getFile(imageInfo.cartoonURL)
             : imageFile;
         if (!file) {
+            setIsAlert(true);
+            setIsSuccess(false);
             setHasImage(false);
+            setTimeout(() => {
+                setIsAlert(false);
+            }, 3000);
             return;
         }
         const formData = new FormData();
@@ -51,12 +60,22 @@ export function CreatePostPage() {
         formData.append("style", imageInfo.theme);
         try {
             const response = await postService.uploadPost(formData);
-            if (response.status === 201) {
-                window.location.reload();
+            if (response.success) {
+                setIsSuccess(true);
+                setIsAlert(true);
+                setTimeout(() => {
+                    setIsAlert(false);
+                }, 3000);
             }
         } catch (error) {
-            console.log(error);
+            setIsAlert(true);
+            setIsSuccess(false);
+            setTimeout(() => {
+                setIsAlert(false);
+            }, 3000);
         }
+        setIsUploading(false);
+        setHasImage(true);
     };
 
     return (
@@ -82,19 +101,23 @@ export function CreatePostPage() {
                         >
                             Create Post
                         </Button>
-                        {!hasImage && (
-                            <Alert
-                                open={!hasImage}
-                                onClose={() => setHasImage(true)}
-                                animate={{
-                                    mount: { y: 0 },
-                                    unmount: { y: 100 },
-                                }}
-                                className="absolute right-0 w-1/2 text-white bg-red-500 top-2"
-                            >
-                                Please upload an image first
-                            </Alert>
-                        )}
+                        <Alert
+                            open={isAlert}
+                            onClose={() => setHasImage(true)}
+                            animate={{
+                                mount: { y: 0 },
+                                unmount: { y: 100 },
+                            }}
+                            className={`absolute right-0 w-1/2 text-white ${
+                                isSuccess ? "bg-green-500" : "bg-red-500"
+                            } top-2`}
+                        >
+                            {isSuccess
+                                ? "Post uploaded successfully"
+                                : !hasImage
+                                ? "Please upload an image"
+                                : "Failed to upload post"}
+                        </Alert>
                     </div>
                     <div className="flex-1 h-[calc(100vh-80px)] flex items-center justify-center">
                         <div className="box-border flex flex-col h-full pt-4">
@@ -114,14 +137,14 @@ export function CreatePostPage() {
                         </div>
                     </div>
                 </form>
-                {isLoading && (
+                {(isLoading || isUploading) && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
                         <div className="flex items-center p-4 bg-white rounded-lg">
                             <Typography
                                 className="mr-2 text-lg italic font-semibold"
                                 size="xl"
                             >
-                                Generating Image
+                                {isUploading ? "Uploading" : "Generating Image"}
                             </Typography>
                             <Spinner className="w-8 h-8" />
                         </div>

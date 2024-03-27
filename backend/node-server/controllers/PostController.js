@@ -13,8 +13,8 @@ const createPost = async (req, res) => {
                 image: {
                     create: {
                         url: imageURL,
-                        style: post.style,
-                        price: post.price,
+                        style: post.style || "Original",
+                        price: JSON.parse(post.commercialUse) ? 10 : 0,
                     },
                 },
                 tag: {

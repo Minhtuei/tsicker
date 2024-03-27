@@ -26,7 +26,7 @@ export function SidePost({ isOpen, setOpen, setHasImage }) {
                     sketch:
                         theme === "Sketch"
                             ? { blur: blurValue, sharpness: sharpnessValue }
-                            : imageInfo.sketch,
+                            : { blur: 3, sharpness: 10 },
                 };
 
                 if (!cache[theme]) {
