@@ -4,14 +4,14 @@ export function PostExplore() {
     return (
         <>
             <div className="flex items-center justify-around w-full h-full">
-                <div className="w-2/3 flex flex-col items-center justify-center h-full bg-purple-50">
+                <div className="flex flex-col items-center justify-center w-3/5 h-full bg-purple-50">
                     <img
-                        className="rounded-3xl border-8 border-black w-[800px] h-[600px] object-cover object-center shadow-xl shadow-blue-gray-900/50"
+                        className="rounded-3xl border-8 border-black w-[600px] h-[400px] object-cover object-center shadow-xl shadow-blue-gray-900/50"
                         src={post_introduce}
                         alt="post_introduce"
                     />
                 </div>
-                <div className="flex justify-center items-center w-1/3 h-full bg-pink-50">
+                <div className="flex items-center justify-center w-2/5 h-full bg-pink-50">
                     <div className="flex flex-col items-center justify-center gap-4 text-center h-1/2">
                         <Typography
                             variant="h1"

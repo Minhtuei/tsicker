@@ -4,6 +4,7 @@ import login_introduce from "../../assets/login_introduce.png";
 import { useAuthFormStore } from "../../states/authFormState";
 export function SignUpExplore() {
     const { openLogin, fromNavBar } = useAuthFormStore();
+
     return (
         <>
             <div
@@ -18,14 +19,14 @@ export function SignUpExplore() {
                     <div className="flex flex-col items-center justify-center gap-4 text-center h-1/2">
                         <Typography
                             variant="h1"
-                            className="text-[60px] font-bold text-white"
+                            className="text-[40px] font-bold text-white"
                         >
                             Sign up to get your ideas
                         </Typography>
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-center w-1/2">
-                    <div className="h-[50px]"></div>
+                    <div className="h-[80px]"></div>
                     {!fromNavBar && (
                         <div className="!w-[600px] ">
                             {openLogin ? (

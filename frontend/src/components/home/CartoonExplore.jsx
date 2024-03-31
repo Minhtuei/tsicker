@@ -38,7 +38,7 @@ export function CartoonExplore() {
                                 <Card
                                     key={index}
                                     shadow={false}
-                                    className="relative grid h-[360px] w-[340px] items-end justify-center overflow-hidden text-center rounded-3xl z-20"
+                                    className="relative grid w-[280px] lg:w-[360px] lg:h-[340px] items-end justify-center overflow-hidden text-center rounded-3xl z-20"
                                 >
                                     <CardHeader
                                         floated={false}
@@ -55,7 +55,7 @@ export function CartoonExplore() {
                                         <Typography
                                             variant="h2"
                                             color="white"
-                                            className="mb-6 font-medium leading-[1.5]"
+                                            className="mb-10 font-medium leading-[1.5]"
                                         >
                                             {slide.name + " Style"}
                                         </Typography>
@@ -66,18 +66,18 @@ export function CartoonExplore() {
                                     key={index}
                                     className={`absolute ${
                                         index % 2 === 0
-                                            ? "-top-[200px]"
-                                            : "-bottom-[200px]"
+                                            ? "top-0 -translate-y-1/2"
+                                            : "bottom-0 translate-y-1/2 z-30"
                                     } ${
                                         index <= 2
-                                            ? "-left-[200px]"
-                                            : "-right-[200px]"
+                                            ? "left-0 -translate-x-2/3"
+                                            : "right-0 translate-x-2/3"
                                     }`}
                                 >
                                     {" "}
                                     <Card
                                         shadow={false}
-                                        className="relative grid h-[320px] w-[300px] items-end justify-center overflow-hidden text-center rounded-3xl"
+                                        className="relative grid w-[260px] items-end justify-center overflow-hidden text-center rounded-3xl"
                                     >
                                         <CardHeader
                                             floated={false}
@@ -94,7 +94,7 @@ export function CartoonExplore() {
                                             <Typography
                                                 variant="h2"
                                                 color="white"
-                                                className="mb-6 font-medium leading-[1.5]"
+                                                className=" font-medium leading-[1.5]"
                                             >
                                                 {slide.name + " Style"}
                                             </Typography>

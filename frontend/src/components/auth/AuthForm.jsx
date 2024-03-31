@@ -65,7 +65,7 @@ export function AuthForm({ type }) {
     };
     return (
         <Card className="mx-auto w-[80%] max-w-[80%] rounded-3xl">
-            <CardBody className="flex flex-col items-center justify-center gap-4">
+            <CardBody className="flex flex-col items-center justify-center p-0 pt-2">
                 <img
                     className="mb-2"
                     src={logo}
@@ -73,15 +73,15 @@ export function AuthForm({ type }) {
                     width={40}
                     height={40}
                 />
-                <Typography className="text-4xl font-bold text-[#111111]">
+                <Typography className="text-3xl font-bold text-[#111111]">
                     Welcome to Tsicker
                 </Typography>
 
                 <form
-                    className="max-w-screen-lg mt-6 mb-2 w-80 sm:w-96"
+                    className="max-w-screen-lg mt-3 mb-1 w-80 sm:w-96"
                     onSubmit={handleSubmit(submit)}
                 >
-                    <div className="flex flex-col gap-4 mb-1">
+                    <div className="flex flex-col gap-2 mb-1">
                         <Typography
                             variant="h6"
                             color="blue-gray"
@@ -108,7 +108,7 @@ export function AuthForm({ type }) {
                             <Typography
                                 color="red"
                                 variant="small"
-                                className="-mt-3 -mb-4"
+                                className="-mt-2 -mb-3"
                             >
                                 {errors.username?.message}{" "}
                             </Typography>
@@ -137,7 +137,7 @@ export function AuthForm({ type }) {
                                     <Typography
                                         color="red"
                                         variant="small"
-                                        className="-mt-3 -mb-4"
+                                        className="-mt-2 -mb-3"
                                     >
                                         {errors.email?.message}{" "}
                                     </Typography>
@@ -170,7 +170,7 @@ export function AuthForm({ type }) {
                             <Typography
                                 color="red"
                                 variant="small"
-                                className="-mt-3 -mb-4"
+                                className="-mt-2 -mb-3"
                             >
                                 {errors.password?.message}{" "}
                             </Typography>
@@ -215,7 +215,7 @@ export function AuthForm({ type }) {
                                     <Typography
                                         color="red"
                                         variant="small"
-                                        className="-mt-3 -mb-4"
+                                        className="-mt-2 -mb-3"
                                     >
                                         {errors.confirmPassword?.message}{" "}
                                     </Typography>
@@ -224,7 +224,7 @@ export function AuthForm({ type }) {
                         )}
                     </div>
                     <Button
-                        className="button button--primary mt-6 !px-2 !text-xs"
+                        className="button button--primary mt-4   !px-2 !text-xs"
                         fullWidth
                         type="submit"
                     >
@@ -232,7 +232,7 @@ export function AuthForm({ type }) {
                     </Button>
                     <Typography
                         color="gray"
-                        className="mt-2 font-bold text-center"
+                        className="mt-1 font-bold text-center"
                     >
                         OR
                     </Typography>
