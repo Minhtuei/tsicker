@@ -81,7 +81,7 @@ export function CreatePostPage() {
     return (
         <div className="h-screen overflow-hidden">
             <NavigationBar />
-            <div className="mt-[80px] h-full flex">
+            <div className="flex h-full">
                 <SidePost
                     isOpen={openTheme}
                     setOpen={setOpenTheme}
