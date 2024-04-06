@@ -33,7 +33,7 @@ export function NavigationBar() {
     }, []);
     return (
         <>
-            <div className="flex justify-between items-center p-4 fixed top-0 bg-white w-screen z-[999] h-[80px]">
+            <div className="flex justify-between items-center p-4 sticky top-0 bg-white w-full z-[100] h-[80px]">
                 <div className="flex items-center w-full py-1 gap-x-4">
                     {!isAuthenticated && (
                         <Link to="/">

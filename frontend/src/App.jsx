@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useUserStore } from "./states/userInfoState";
 import { authService } from "./services/authService";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
+import { PostGridGallery } from "./components/home/PostGridGallery";
 export function App() {
     const { setUserInfo, setIsAuthenticated, authLoading, setAuthLoading } =
         useUserStore();
@@ -14,8 +15,6 @@ export function App() {
             if (response.success) {
                 setUserInfo(response.user);
                 setIsAuthenticated(true);
-            } else {
-                window.location.reload();
             }
             setAuthLoading(false);
         };
@@ -34,6 +33,14 @@ export function App() {
                     element={
                         <ProtectedRoute>
                             <CreatePostPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/post"
+                    element={
+                        <ProtectedRoute>
+                            <PostGridGallery />
                         </ProtectedRoute>
                     }
                 />
