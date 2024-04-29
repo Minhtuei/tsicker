@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { NavigationBar } from "../components/NavigationBar";
 import { CartoonExplore } from "../components/home/CartoonExplore";
 import { PostExplore } from "../components/home/PostExplore";
@@ -6,8 +6,10 @@ import { PostGridGallery } from "../components/home/PostGridGallery";
 import { SignUpExplore } from "../components/home/SignUpExplore";
 import { SketchExplore } from "../components/home/SketchExplore";
 import { SlideExplore } from "../components/home/SlideExplore";
+import usePreventMiddleClick from "../hooks/usePreventMiddleClick";
 import { useUserStore } from "../states/userInfoState";
 export function HomePage() {
+    usePreventMiddleClick();
     const COMPONENTS = [
         SlideExplore,
         SketchExplore,
@@ -15,19 +17,9 @@ export function HomePage() {
         PostExplore,
         SignUpExplore,
     ];
+
     const targetRef = useRef(null);
 
-    useEffect(() => {
-        const handleMouseDown = (event) => {
-            if (event.button === 1) {
-                event.preventDefault();
-            }
-        };
-        window.addEventListener("mousedown", handleMouseDown);
-        return () => {
-            window.removeEventListener("mousedown", handleMouseDown);
-        };
-    }, []);
     const handleButtonClick = useCallback(() => {
         if (targetRef.current) {
             targetRef.current.scrollIntoView({

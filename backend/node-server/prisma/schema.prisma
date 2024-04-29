@@ -126,6 +126,7 @@ model user {
   download                                download[]
   interact                                interact[]
   post                                    post[]
+  avatar                                  String?      @db.VarChar(255)
   subscribe_subscribe_subscribed_idTouser subscribe[]  @relation("subscribe_subscribed_idTouser")
   subscribe_subscribe_subscriber_idTouser subscribe[]  @relation("subscribe_subscriber_idTouser")
 }

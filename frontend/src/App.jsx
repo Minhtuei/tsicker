@@ -6,6 +6,7 @@ import { useUserStore } from "./states/userInfoState";
 import { authService } from "./services/authService";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 import { PostGridGallery } from "./components/home/PostGridGallery";
+import { DetailPostPage } from "./pages/DetailPostPage";
 export function App() {
     const { setUserInfo, setIsAuthenticated, authLoading, setAuthLoading } =
         useUserStore();
@@ -41,6 +42,14 @@ export function App() {
                     element={
                         <ProtectedRoute>
                             <PostGridGallery />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/post/:postId"
+                    element={
+                        <ProtectedRoute>
+                            <DetailPostPage />
                         </ProtectedRoute>
                     }
                 />
