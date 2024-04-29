@@ -38,4 +38,26 @@ export const postService = {
             else return { success: false, error: error.message };
         }
     },
+    getAllPosts: async () => {
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_REACT_API_URL}/post/getAll`
+            );
+            return response.data;
+        } catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, error: error.message };
+        }
+    },
+    getPost: async (postId) => {
+        try {
+            const response = await axios.get(
+                `${import.meta.env.VITE_REACT_API_URL}/post/${postId}`
+            );
+            return response.data;
+        } catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, error: error.message };
+        }
+    },
 };
